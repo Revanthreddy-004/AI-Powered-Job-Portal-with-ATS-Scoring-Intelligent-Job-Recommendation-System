@@ -47,15 +47,14 @@ public class ApplicationController {
 
     @PostMapping("/apply")
     public String applyJob(
-
             @RequestParam Long candidateId,
-
             @RequestParam Long jobId) {
 
-        return applicationService
-                .applyJob(
-                        candidateId,
-                        jobId);
+        System.out.println("========== APPLY HIT ==========");
+        System.out.println("candidateId = " + candidateId);
+        System.out.println("jobId = " + jobId);
+
+        return "TEST SUCCESS";
     }
 
     @PutMapping("/{applicationId}/status")

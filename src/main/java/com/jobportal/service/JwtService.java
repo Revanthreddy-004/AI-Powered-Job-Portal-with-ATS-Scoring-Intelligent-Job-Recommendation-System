@@ -30,6 +30,13 @@ public class JwtService {
                 "role",
                 user.getRole().name());
 
+        claims.put(
+                "userId",
+                user.getId());
+
+        claims.put(
+                "name",
+                user.getName());
         return Jwts.builder()
                 .claims(claims)
                 .subject(user.getEmail())

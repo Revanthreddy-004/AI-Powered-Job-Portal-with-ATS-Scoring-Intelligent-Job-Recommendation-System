@@ -1,147 +1,359 @@
-# Job Portal Backend Application
+# Job Portal - Full Stack Job Recruitment Platform
 
 ## Overview
 
-A full-featured Job Portal Backend Application built using Spring Boot, Spring Security, JWT Authentication, MySQL, JPA/Hibernate, Docker, and Swagger.
+Job Portal is a full-stack recruitment platform built using Spring Boot, Spring Security, JWT Authentication, MySQL, and Angular.
 
-The system supports three roles:
-
-* ADMIN
-* RECRUITER
-* CANDIDATE
-
-The application provides secure authentication, role-based access control, job management, company management, candidate applications, dashboards, filtering, pagination, validation, testing, and containerized deployment.
+The system enables candidates to register, log in, browse jobs, search and filter opportunities, and apply for jobs. Recruiters can create job postings and manage candidate applications through a secure role-based authorization system.
 
 ---
 
-## Tech Stack
+# Tech Stack
 
-### Backend
+## Backend
 
-* Java 17
+* Java
 * Spring Boot
 * Spring Security
 * JWT Authentication
 * Spring Data JPA
 * Hibernate
+* MySQL
 * Maven
 
-### Database
+## Frontend
 
-* MySQL
-
-### Testing
-
-* JUnit 5
-* Mockito
-
-### Documentation
-
-* Swagger OpenAPI
-
-### DevOps
-
-* Docker
-* Docker Compose
+* Angular 22
+* TypeScript
+* Angular Router
+* Angular HttpClient
+* Tailwind CSS
 
 ---
 
-## Features
+# Features
 
-### Authentication & Authorization
+## Authentication & Security
 
 * User Registration
 * User Login
 * JWT Token Generation
 * JWT Authentication Filter
-* Role Based Access Control (RBAC)
+* Role-Based Authorization
+* Protected REST APIs
 
-### Company Management
+## User Roles
+
+### Candidate
+
+* Register Account
+* Login Account
+* View Available Jobs
+* Search Jobs
+* Filter Jobs
+* Apply For Jobs
+
+### Recruiter
+
+* Create Jobs
+* Update Jobs
+* View Applications
+* Update Candidate Application Status
+
+### Admin
+
+* Manage Jobs
+* Access Protected Resources
+
+---
+
+# Company Management
 
 * Create Company
-* Update Company
-* Delete Company
-* Get Company Details
+* View All Companies
+* Get Company By ID
 
-### Job Management
+APIs:
+
+```http
+POST /api/companies
+
+GET /api/companies
+
+GET /api/companies/{id}
+```
+
+---
+
+# Job Management
 
 * Create Job
+* View All Jobs
+* Get Job By ID
 * Update Job
 * Delete Job
-* View Jobs
-* Pagination
-* Search by Location
-* Search by Experience
-* Search by Salary
-* Combined Filtering
 
-### Application Management
+APIs:
 
-* Apply for Jobs
-* Prevent Duplicate Applications
-* View Applications by Candidate
-* View Applications by Job
-* Update Application Status
+```http
+POST /api/jobs
 
-### Dashboards
+GET /api/jobs
 
-#### Candidate Dashboard
+GET /api/jobs/{id}
 
-* View Applied Jobs
-* Track Application Status
+PUT /api/jobs/{id}
 
-#### Recruiter Dashboard
+DELETE /api/jobs/{id}
+```
 
-* View Applications for Jobs
-* Update Candidate Status
+---
+
+# Search & Filtering
+
+### Search By Location
+
+```http
+GET /api/jobs/search/location
+```
+
+### Search By Salary
+
+```http
+GET /api/jobs/search/salary
+```
+
+### Search By Experience
+
+```http
+GET /api/jobs/search/experience
+```
+
+### Combined Filter
+
+```http
+GET /api/jobs/filter
+```
+
+Supports:
+
+* Location
+* Experience
+* Minimum Salary
+
+---
+
+# Pagination
+
+Paginated Job Listing:
+
+```http
+GET /api/jobs/page?page=0&size=10
+```
+
+---
+
+# Application Management
+
+### Apply For Job
+
+```http
+POST /api/applications/apply
+```
+
+### View Candidate Applications
+
+```http
+GET /api/applications/candidate/{candidateId}
+```
+
+### View Applications For A Job
+
+```http
+GET /api/applications/job/{jobId}
+```
+
+### View All Applications
+
+```http
+GET /api/applications
+```
+
+### Update Application Status
+
+```http
+PUT /api/applications/{applicationId}/status
+```
+
+Supported Statuses:
+
+* APPLIED
+* SHORTLISTED
+* REJECTED
+* HIRED
+
+---
+
+# Analytics & Statistics
+
+### Count Applications For Job
+
+```http
+GET /api/applications/count/job/{jobId}
+```
+
+### Count Applications By Status
+
+```http
+GET /api/applications/count/status/{status}
+```
+
+---
+
+# Business Rules
+
+### Duplicate Application Prevention
+
+A candidate cannot apply to the same job more than once.
+
+Example Response:
+
+```json
+{
+  "message": "Already Applied"
+}
+```
 
 ### Validation
 
 * Request Validation using Jakarta Validation
-
-### Exception Handling
-
 * Global Exception Handling
-
-### API Documentation
-
-* Swagger UI Integration
-
-### Testing
-
-* Unit Testing using JUnit and Mockito
-
-### Containerization
-
-* Dockerized Spring Boot Application
-* Docker Compose for MySQL + Backend
+* Secure Password Storage using BCrypt
 
 ---
 
-## Security
+# Database Entities
 
-* JWT Authentication
-* Password Encryption using BCrypt
-* Role Based Authorization
-* Stateless Session Management
+## User
+
+* id
+* name
+* email
+* password
+* role
+
+## Company
+
+* id
+* companyName
+* location
+* description
+
+## Job
+
+* id
+* title
+* description
+* salary
+* location
+* experience
+* company
+
+## Application
+
+* id
+* status
+* appliedAt
+* candidate
+* job
 
 ---
 
-## Running Locally
+# Frontend Features
+
+## Implemented
+
+* User Registration
+* User Login
+* JWT Storage
+* Jobs Listing Page
+* Apply Job Integration
+* Candidate Dashboard Structure
+* Recruiter Dashboard Structure
+* Angular Routing
+* API Integration
+
+---
+
+# Testing
+
+Unit Tests Implemented For:
+
+* AuthService
+* JobService
+* ApplicationService
+
+---
+
+# Setup Instructions
+
+## Database
+
+Create MySQL database:
+
+```sql
+CREATE DATABASE job_portal;
+```
+
+Update:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/job_portal
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+```
+
+---
+
+## Run Backend
 
 ```bash
 mvn spring-boot:run
 ```
 
-## Running with Docker
+---
+
+## Run Frontend
 
 ```bash
-mvn clean package
-docker compose up --build
+npm install
+
+ng serve
 ```
 
-## Author
+Application URL:
 
-**BADDAM REVANTH REDDY**
+```text
+http://localhost:4200
+```
 
-Spring Boot | Java | MySQL | Docker
+---
+
+# Future Enhancements
+
+* Resume Upload
+* Advanced Search Filters
+* Recruiter Analytics Dashboard
+* Email Notifications
+* Application Tracking UI Improvements
+* Candidate Profile Management
+
+---
+
+# Project Status
+
+Backend: Complete
+
+Frontend: Authentication, Job Listing, and Job Application Integration Completed
+
+Project Type: Full Stack Web Application

@@ -1,5 +1,5 @@
 package com.jobportal.service;
-
+import com.jobportal.dto.AuthResponse;
 import com.jobportal.dto.LoginRequest;
 import com.jobportal.dto.RegisterRequest;
 import com.jobportal.entity.User;
@@ -32,24 +32,46 @@ public class AuthService {
         return "User Registered Successfully";
     }
 
-    public String login(LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
 
         User user = userRepository
                 .findByEmail(request.getEmail())
                 .orElseThrow(() ->
                         new RuntimeException("User not found"));
 
+        System.out.println(
+                "EMAIL = " +
+                        request.getEmail());
+
+        System.out.println(
+                "RAW PASSWORD = " +
+                        request.getPassword());
+
+        System.out.println(
+                "DB HASH = " +
+                        user.getPassword());
+
         boolean matches =
                 passwordEncoder.matches(
                         request.getPassword(),
                         user.getPassword());
+
+        System.out.println(
+                "MATCHES = " +
+                        matches);
 
         if (!matches) {
             throw new RuntimeException(
                     "Invalid Credentials");
         }
 
-        return jwtService.generateToken(
-                user);
+        String token = jwtService.generateToken(user);
+
+        return AuthResponse.builder()
+                .token(token)
+                .userId(user.getId())
+                .name(user.getName())
+                .role(user.getRole().name())
+                .build();
 }
 }

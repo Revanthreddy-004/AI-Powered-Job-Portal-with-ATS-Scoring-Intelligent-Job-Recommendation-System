@@ -1,5 +1,7 @@
 package com.jobportal.config;
-
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.jobportal.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,13 +22,36 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
 
+        CorsConfiguration configuration =
+                new CorsConfiguration();
+
+        configuration.addAllowedOrigin(
+                "http://localhost:4200");
+
+        configuration.addAllowedMethod("*");
+
+        configuration.addAllowedHeader("*");
+
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration(
+                "/**",
+                configuration);
+
+        return source;
+    }
     @Bean
     SecurityFilterChain securityFilterChain(
             HttpSecurity http) throws Exception {
 
         http
-                .csrf(csrf -> csrf.disable())
+                .cors(cors -> {}).csrf(csrf -> csrf.disable())
 
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
@@ -67,8 +92,7 @@ public class SecurityConfig {
                         .hasRole("ADMIN")
 
                         .requestMatchers("/api/applications/apply")
-                        .hasRole(
-                                "CANDIDATE")
+                        .permitAll()
 
                         .requestMatchers("/api/applications/**")
                         .hasAnyRole(

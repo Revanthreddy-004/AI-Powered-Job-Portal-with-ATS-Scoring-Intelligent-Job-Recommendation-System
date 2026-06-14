@@ -1,0 +1,53 @@
+<nav
+  class="bg-blue-600 text-white p-4 flex justify-between">
+
+  <div class="font-bold text-xl">
+
+    Job Portal
+
+  </div>
+
+  <div class="flex gap-4">
+
+    <a
+      routerLink="/jobs"
+      class="hover:underline">
+
+      Jobs
+
+    </a>
+
+    @if(role === 'CANDIDATE'){
+
+    <a
+      routerLink="/candidate-dashboard"
+      class="hover:underline">
+
+      My Applications
+
+    </a>
+
+    }
+
+    @if(role === 'RECRUITER'){
+
+    <a
+      routerLink="/recruiter-dashboard"
+      class="hover:underline">
+
+      Dashboard
+
+    </a>
+
+    }
+
+    <button
+      (click)="logout()">
+
+      Logout
+
+    </button>
+
+  </div>
+
+</nav>
