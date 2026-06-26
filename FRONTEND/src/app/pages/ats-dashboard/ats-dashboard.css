@@ -1,0 +1,43 @@
+.container{
+
+  padding:20px;
+
+}
+
+h1{
+
+  margin-bottom:20px;
+
+}
+
+h2{
+
+  color:green;
+
+}
+.progress{
+
+  width:100%;
+  height:30px;
+
+  background:#ddd;
+
+  border-radius:10px;
+
+}
+
+.progress-bar{
+
+  height:100%;
+
+  background:green;
+
+  color:white;
+
+  text-align:center;
+
+  line-height:30px;
+
+  border-radius:10px;
+
+}

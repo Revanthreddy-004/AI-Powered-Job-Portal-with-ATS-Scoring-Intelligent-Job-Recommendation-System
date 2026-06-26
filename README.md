@@ -1,10 +1,10 @@
-# Job Portal - Full Stack Job Recruitment Platform
+# AI-Powered Job Portal with ATS Scoring & Intelligent Job Recommendation System
 
 ## Overview
 
-Job Portal is a full-stack recruitment platform built using Spring Boot, Spring Security, JWT Authentication, MySQL, and Angular.
+AI-Powered Job Portal is a full-stack recruitment platform built using Spring Boot, Spring Security, JWT Authentication, Angular, MySQL, Redis, Kafka, and Docker.
 
-The system enables candidates to register, log in, browse jobs, search and filter opportunities, and apply for jobs. Recruiters can create job postings and manage candidate applications through a secure role-based authorization system.
+The application enables candidates to register, upload resumes, receive ATS scores, and get personalized job recommendations. Recruiters can create jobs, manage applications, and update candidate statuses through a secure role-based authorization system.
 
 ---
 
@@ -12,13 +12,15 @@ The system enables candidates to register, log in, browse jobs, search and filte
 
 ## Backend
 
-* Java
+* Java 17
 * Spring Boot
 * Spring Security
 * JWT Authentication
 * Spring Data JPA
 * Hibernate
 * MySQL
+* Redis
+* Apache Kafka
 * Maven
 
 ## Frontend
@@ -27,7 +29,13 @@ The system enables candidates to register, log in, browse jobs, search and filte
 * TypeScript
 * Angular Router
 * Angular HttpClient
-* Tailwind CSS
+* HTML
+* CSS
+
+## DevOps
+
+* Docker
+* Docker Compose
 
 ---
 
@@ -41,26 +49,33 @@ The system enables candidates to register, log in, browse jobs, search and filte
 * JWT Authentication Filter
 * Role-Based Authorization
 * Protected REST APIs
+* BCrypt Password Encryption
 
-## User Roles
+---
 
-### Candidate
+# User Roles
+
+## Candidate
 
 * Register Account
 * Login Account
-* View Available Jobs
+* Browse Jobs
 * Search Jobs
 * Filter Jobs
 * Apply For Jobs
+* Upload Resume
+* View ATS Score
+* View Recommended Jobs
 
-### Recruiter
+## Recruiter
 
 * Create Jobs
 * Update Jobs
+* Delete Jobs
 * View Applications
-* Update Candidate Application Status
+* Update Application Status
 
-### Admin
+## Admin
 
 * Manage Jobs
 * Access Protected Resources
@@ -73,7 +88,7 @@ The system enables candidates to register, log in, browse jobs, search and filte
 * View All Companies
 * Get Company By ID
 
-APIs:
+### APIs
 
 ```http
 POST /api/companies
@@ -93,7 +108,7 @@ GET /api/companies/{id}
 * Update Job
 * Delete Job
 
-APIs:
+### APIs
 
 ```http
 POST /api/jobs
@@ -145,10 +160,59 @@ Supports:
 
 # Pagination
 
-Paginated Job Listing:
-
 ```http
 GET /api/jobs/page?page=0&size=10
+```
+
+---
+
+# Resume Upload System
+
+Features:
+
+* PDF Resume Upload
+* Resume Storage
+* Resume Text Extraction
+* Candidate Resume Management
+
+### API
+
+```http
+POST /api/resume/upload
+```
+
+---
+
+# ATS Scoring System
+
+Features:
+
+* Resume Skill Analysis
+* Job Description Matching
+* Matched Skills Detection
+* Missing Skills Detection
+* ATS Score Calculation
+
+### API
+
+```http
+GET /api/ats/job/{jobId}/user/{userId}
+```
+
+---
+
+# Intelligent Job Recommendation System
+
+Features:
+
+* Resume-Based Recommendations
+* Skill Matching
+* Personalized Job Suggestions
+
+### API
+
+```http
+GET /api/recommend/{userId}
 ```
 
 ---
@@ -167,7 +231,7 @@ POST /api/applications/apply
 GET /api/applications/candidate/{candidateId}
 ```
 
-### View Applications For A Job
+### View Applications For Job
 
 ```http
 GET /api/applications/job/{jobId}
@@ -210,13 +274,80 @@ GET /api/applications/count/status/{status}
 
 ---
 
+# Redis Caching
+
+Implemented caching for:
+
+* Job Listings
+* ATS Results
+* Recommendation Results
+
+Annotations Used:
+
+* @Cacheable
+* @CacheEvict
+
+Benefits:
+
+* Reduced Database Hits
+* Faster API Responses
+* Improved Application Performance
+
+---
+
+# Apache Kafka Integration
+
+Kafka is used for asynchronous event processing.
+
+### Producer
+
+* Sends resume upload events.
+
+### Consumer
+
+* Receives resume upload events.
+
+### Flow
+
+Resume Upload
+
+↓
+
+Kafka Producer
+
+↓
+
+Kafka Topic
+
+↓
+
+Kafka Consumer
+
+---
+
+# Docker Containerization
+
+Containerized Services:
+
+* Spring Boot Application
+* MySQL Database
+* Redis Server
+* Kafka Broker
+
+Docker Technologies:
+
+* Dockerfile
+* Docker Compose
+
+---
+
 # Business Rules
 
 ### Duplicate Application Prevention
 
 A candidate cannot apply to the same job more than once.
 
-Example Response:
+Example:
 
 ```json
 {
@@ -226,9 +357,9 @@ Example Response:
 
 ### Validation
 
-* Request Validation using Jakarta Validation
+* Jakarta Validation
 * Global Exception Handling
-* Secure Password Storage using BCrypt
+* BCrypt Password Encryption
 
 ---
 
@@ -259,6 +390,14 @@ Example Response:
 * experience
 * company
 
+## Resume
+
+* id
+* fileName
+* filePath
+* extractedText
+* user
+
 ## Application
 
 * id
@@ -271,35 +410,49 @@ Example Response:
 
 # Frontend Features
 
-## Implemented
+Implemented:
 
 * User Registration
 * User Login
-* JWT Storage
-* Jobs Listing Page
-* Apply Job Integration
-* Candidate Dashboard Structure
-* Recruiter Dashboard Structure
+* JWT Token Storage
+* Job Listing Page
+* ATS Dashboard
+* Recommendation Dashboard
+* Candidate Dashboard
+* Recruiter Dashboard
 * Angular Routing
 * API Integration
 
 ---
 
+# Security Features
+
+* Spring Security
+* JWT Authentication
+* Role-Based Access Control
+* BCrypt Password Encryption
+* Protected APIs
+
+---
+
 # Testing
 
-Unit Tests Implemented For:
+Tested Modules:
 
 * AuthService
 * JobService
 * ApplicationService
+* ATS APIs
+* Recommendation APIs
+* Resume Upload APIs
+* Redis Cache
+* Kafka Producer & Consumer
 
 ---
 
 # Setup Instructions
 
 ## Database
-
-Create MySQL database:
 
 ```sql
 CREATE DATABASE job_portal;
@@ -318,6 +471,8 @@ spring.datasource.password=YOUR_PASSWORD
 ## Run Backend
 
 ```bash
+mvn clean install
+
 mvn spring-boot:run
 ```
 
@@ -339,14 +494,29 @@ http://localhost:4200
 
 ---
 
+## Docker
+
+```bash
+docker compose up
+```
+
+Containerized Services:
+
+* MySQL
+* Redis
+* Kafka
+* Spring Boot
+
+---
+
 # Future Enhancements
 
-* Resume Upload
-* Advanced Search Filters
-* Recruiter Analytics Dashboard
 * Email Notifications
-* Application Tracking UI Improvements
-* Candidate Profile Management
+* Interview Scheduling
+* Kubernetes Deployment
+* AI-Based Resume Analysis
+* Real-Time Notifications
+* Application Tracking Dashboard
 
 ---
 
@@ -354,6 +524,28 @@ http://localhost:4200
 
 Backend: Complete
 
-Frontend: Authentication, Job Listing, and Job Application Integration Completed
+Frontend: Complete
 
-Project Type: Full Stack Web Application
+JWT Authentication: Complete
+
+Resume Upload: Complete
+
+ATS Scoring: Complete
+
+Recommendation Engine: Complete
+
+Redis Integration: Complete
+
+Kafka Integration: Complete
+
+Docker Integration: Complete
+
+Project Type: Full Stack AI-Powered Job Recruitment Platform
+
+---
+
+# Author
+
+**Baddam Revanth Reddy**
+
+B.Tech AIML | Java Full Stack Developer

@@ -1,0 +1,58 @@
+<div *ngIf="score">
+
+  <h1>
+    ATS Dashboard
+  </h1>
+
+  <h2>
+    ATS Score :
+    {{score.score}}%
+  </h2>
+
+  <div class="progress">
+
+    <div
+      class="progress-bar"
+      [style.width.%]="score.score">
+
+      {{score.score}}%
+
+    </div>
+
+  </div>
+
+  <hr>
+
+  <h3>
+    Matched Skills
+  </h3>
+
+  <ul>
+
+    <li
+      *ngFor="let skill of score.matchedSkills">
+
+      {{skill}}
+
+    </li>
+
+  </ul>
+
+  <hr>
+
+  <h3>
+    Missing Skills
+  </h3>
+
+  <ul>
+
+    <li
+      *ngFor="let skill of score.missingSkills">
+
+      {{skill}}
+
+    </li>
+
+  </ul>
+
+</div>
