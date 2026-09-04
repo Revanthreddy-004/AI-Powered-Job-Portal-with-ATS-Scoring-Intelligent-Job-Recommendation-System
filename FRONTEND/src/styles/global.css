@@ -1,0 +1,148 @@
+/* =========================
+   BASIC RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+    padding: 9px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+textarea,
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+
+/* =========================
+   COMMON CONTAINER
+========================= */
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px;
+}
+
+
+/* =========================
+   COMMON CARD
+========================= */
+
+.card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+
+/* =========================
+   COMMON BUTTON COLORS
+========================= */
+
+.primary-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.success-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.danger-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.secondary-btn {
+    background: #e5e7eb;
+    color: #333;
+}
+
+
+/* =========================
+   MESSAGES
+========================= */
+
+.success-message {
+    color: #15803d;
+    margin: 10px 0;
+}
+
+.error-message {
+    color: #dc2626;
+    margin: 10px 0;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 15px;
+    }
+
+    button {
+        margin-bottom: 5px;
+    }
+}

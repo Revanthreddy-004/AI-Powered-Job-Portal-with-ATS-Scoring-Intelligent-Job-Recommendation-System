@@ -31,3 +31,19 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### FRONTEND
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+
+# Environment files / secrets
+.env
+
+# Local database backup
+job_portal_backup.sql
+
+# Uploaded resume files
+BACKEND/uploads/

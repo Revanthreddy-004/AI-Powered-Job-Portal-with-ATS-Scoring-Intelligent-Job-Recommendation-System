@@ -1,0 +1,144 @@
+/* =========================
+   NAVBAR
+   ========================= */
+
+.navbar {
+    width: 100%;
+    min-height: 64px;
+    padding: 0 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #ffffff;
+    border-bottom: 2px solid #e8eef7;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+
+/* =========================
+   BRAND
+   ========================= */
+
+.navbar-brand {
+    color: #2563eb;
+    text-decoration: none;
+
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+
+    transition: color 0.2s ease;
+}
+
+.navbar-brand:hover {
+    color: #1d4ed8;
+}
+
+
+/* =========================
+   NAVIGATION LINKS
+   ========================= */
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.navbar-link {
+    padding: 9px 13px;
+    border-radius: 7px;
+
+    color: #374151;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.navbar-link:hover {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.navbar-link.active {
+    background: #e8f0ff;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+
+/* =========================
+   LOGOUT BUTTON
+   ========================= */
+
+.logout-button {
+    margin-left: 8px;
+    padding: 9px 15px;
+
+    border: 1px solid #fecaca;
+    border-radius: 7px;
+
+    background: #fff1f2;
+    color: #dc2626;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.logout-button:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #fca5a5;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 900px) {
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .navbar-link {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .logout-button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 650px) {
+    .navbar {
+        min-height: auto;
+        padding: 14px 16px;
+
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .navbar-links {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
